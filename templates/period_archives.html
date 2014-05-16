@@ -1,0 +1,13 @@
+{% extends "archives.html" %}
+
+{% block timeperiod %}
+    {# year only #}
+    {% if period|length == 1 %}
+        for {{ period.0 }}
+    {# month and year #}
+    {% elif period|length == 2 %}
+        for {{ period.1 }} {{ period.0 }}
+    {% else %}
+        {{ period }}
+    {% endif %}
+{% endblock %}

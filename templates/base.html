@@ -30,6 +30,7 @@
         <link href="{{ FEED_DOMAIN }}/{{ TAG_FEED_RSS|format(tag.slug) }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} Tags RSS Feed" />
         {% endif %}
 
+        {# Added by JJ #}
 
         <!-- Mobile viewport optimized: j.mp/bplateviewport -->
         <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
@@ -46,6 +47,7 @@
           <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ ASSET_URL }}" />
         {% endassets %}
 
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <script src="{{ SITEURL }}/theme/js/libs/modernizr-2.6.2.min.js"></script>
 
 
@@ -57,6 +59,7 @@
                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
                 ga('create', '{{ GOOGLE_ANALYTICS_ID }}', '{{ GOOGLE_ANALYTICS_SITENAME }}');
+                ga('require', 'displayfeatures');
                 ga('send', 'pageview');
 
               </script>
@@ -99,8 +102,24 @@
                 {% endfor %}
               {% endif %}
             {% endif %}
-
               </ul>
+
+                {% if FEED_ALL_ATOM %}
+                    {% if output_file == "index.html" %}
+                        {% set feed_link = FEED_ALL_ATOM %}
+                    {% elif category %}
+                        {% set feed_link = CATEGORY_FEED_ATOM|format(category|lower) %}
+                    {% elif tag %}
+                        {% set feed_link = TAG_FEED_ATOM|format(tag|lower) %}
+                    {% else %}
+                        {% set feed_link = FEED_ALL_ATOM %}
+                    {% endif %}
+                {% endif %}
+
+                <!-- RSS/Atom feed -->
+                <ul class="columns">
+                    <li><a class="rss-icon" href="{{ SITEURL }}/{{ feed_link }}"><i class="fa fa-rss fa-2x"></i></a></li>
+                </ul>
             </div>
 
           {% block content %}
@@ -159,5 +178,6 @@
   <script src="{{ SITEURL }}/theme/js/libs/jquery-1.9.1.min.js"></script>
   <script src="{{ SITEURL }}/theme/js/libs/gumby.min.js"></script>
   <script src="{{ SITEURL }}/theme/js/plugins.js"></script>
+  <script src="{{ SITEURL }}/theme/js/jj-js.js"></script>
 </body>
 </html>

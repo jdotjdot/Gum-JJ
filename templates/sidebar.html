@@ -1,4 +1,33 @@
+{% macro social_link(name, url, fa=None, circle=False) -%}
+    <li><a href="{{ url|e }}">
+        {% if fa %}
+            {% if circle %}
+                <span class="fa-stack fa-2x social-icon">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa {{ fa }} fa-inverse fa-stack-1x"></i>
+            </span>
+            {% else %}
+                <i class="social-icon fa fa-2x {{ fa }}"></i>
+            {% endif %}
+        {% else %}
+            {{ name }}
+        {% endif %}
+    </a></li>
+{%- endmacro %}
+
 <div class="three columns">
+
+{% if SOCIAL %}
+    <nav class="widget">
+        <h4>Social</h4>
+        <ul class="social-link-list">
+            {% for item in SOCIAL %}
+            {# item structure: [name, url[, fa]] #}
+               {{ social_link(*item) }}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}
 
 <h4>Pages</h4>
 
@@ -32,22 +61,12 @@
 <h4>Tags</h4>
 {% if tags %}
 	<ul>
-	{% for tag in tag_cloud %}
+	{% for tag in tag_cloud|sort %}
 	    <li class="tag-{{ tag.1 }}"><a href="{{ SITEURL }}/{{ tag.0.url }}">{{ tag.0|e }}</a></li>
 	{% endfor %}
 </ul>
 {% endif %}
 
 
-{% if SOCIAL %}
-<nav class="widget">
-  <h4>Social</h4>
-  <ul>
-  {% for name, url in SOCIAL %}
-    <li><a href="{{ url|e }}">{{ name }}</a></li>
-  {% endfor %}
-  </ul>
-</nav>
-{% endif %}
 
 </div>

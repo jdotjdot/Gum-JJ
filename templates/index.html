@@ -14,10 +14,11 @@
 				{% for article in articles_page.object_list %}
 				        <li><article class="hentry">
 				                <header> <h2 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2> </header>
-				                <footer class="post-info">
-				                    <abbr class="published" title="{{ article.date.isoformat() }}"> {{ article.locale_date }} </abbr>
-				                    {% if article.author %}<address class="vcard author">By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a></address>{% endif %}
-				                </footer><!-- /.post-info -->
+                                <footer class="post-info">
+                                    Published <span class="published" title="{{ article.date.isoformat() }}">{{article.date|strftime("%a, %B %d, %Y")|replace(" 0", " ")}}</span> by
+                                    <a class="url fn author-name" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a>
+                                </footer>
+                                <br>
 				                <div class="entry-content"> {{ article.summary }} </div><!-- /.entry-content -->
 
 								<div class="medium primary btn"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">Read more <i class="icon-arrow-right"></i></a></div>
@@ -26,9 +27,9 @@
 
 								<div class="row tag-row">
 									{% if article.tags %}
-										<span>Tagged as : </span>
+										<span>Tagged in: </span>
 										{% for tag in article.tags %}
-											<a class="danger label" href="{{ SITEURL }}/{{ tag.url }}">{{ tag|e }}</a>
+											<a class="tag" href="{{ SITEURL }}/{{ tag.url }}">{{ tag|e }}</a>{% if not loop.last %},{% endif %}
 										{% endfor %}
 									{% endif %}
 								</div>
