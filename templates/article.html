@@ -21,10 +21,10 @@
                 {% if article.tags %}
                 <br>
                 <span>Tagged in: </span>
-                {% for tag in article.tags %}
-                    <a class="tag" href="{{ SITEURL }}/{{ tag.url }}">{{ tag|e }}</a>{% if not loop.last %},{% endif %}
-                {% endfor %}
-            {% endif %}
+                    {% for tag in article.tags %}
+                        <a class="tag" href="{{ SITEURL }}/{{ tag.url }}">{{ tag|e }}</a>{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
                 <hr>
             </footer>
 
